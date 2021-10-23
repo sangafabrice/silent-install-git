@@ -7,9 +7,10 @@ Set-PoshPrompt -Theme rudolfs-light-fork
 $GitPrompt = (Get-Command Prompt).ScriptBlock
 
 filter prompt {
-    (Test-Path "$PWD\.git") ? $(
-        [void] (Get-ChildItem -Filter '.git' -Force | ForEach-Object {
-            $_.Attributes = 'Hidden','System'
+    (Test-Path '.git') ? $(
+        (Get-ChildItem -Filter '.git' -Force |
+            ForEach-Object {
+                $_.Attributes = 'Hidden','System'
         });
         & $GitPrompt):(& $Prompt)
 }
